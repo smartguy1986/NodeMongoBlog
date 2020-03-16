@@ -1,1 +1,1 @@
-web: npm run devStart
+web: node server.js
