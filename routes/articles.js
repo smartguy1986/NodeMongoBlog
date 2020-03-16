@@ -1,4 +1,10 @@
 const express = require('express')
+
+const mongoose = require('mongoose').set('debug', true)
+mongoose.connect('mongodb://root:1986@blog-shard-00-00-eip6j.mongodb.net:27017,blog-shard-00-01-eip6j.mongodb.net:27017,blog-shard-00-02-eip6j.mongodb.net:27017/test?ssl=true&replicaSet=blog-shard-0&authSource=admin&retryWrites=true&w=majority', {
+    useNewUrlParser: true, useUnifiedTopology: true
+})
+
 const Article = require('./../models/article')
 const router = express.Router()
 
@@ -7,9 +13,10 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    const article = Article.findById(req.params.id)
-    if (article == null) res.redirect('/')
-    res.render('articles/show', { article: article })
+    const arijit = req.params.id
+    const article2 = Article.findById(req.params.id)
+    //if (article == null) res.redirect('/')
+    res.render('articles/show', { article: article2 })
 })
 
 router.post('/', async (req, res) => {
