@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false}))
 
 app.get('/', async (req, res) => {
     const articles = await Article.find().sort({createdAt: 'desc'})
+    //console.log(articles)
     res.render('articles/index', { articles: articles})
 })
 
