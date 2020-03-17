@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>Blog</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Blog</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 </head>
+
 <body>
     <div class="container">
         <h1 class="mb-4">Blog Articles</h1>
         <a href="/articles/new" class="btn btn-success">New Article</a>
 
         <% articles.forEach(article => { %>
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <%= article.title %>
-                    </h4>
-                    <div class="card-subtitle text-muted mb-2">
-                        <%= article.createdAt.toLocaleDateString() %>
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <% if (article.featuredimage==null) { %>
+                                <img src='images/defaultImage.png' width="100%">
+                            <%} else { %>
+                                <img src='uploads/<%= article.featuredimage %>' width="100%">
+                            <% } %>
+                            
+                        </div>
+                        <div class="col">
+                            <h4 class="card-title">
+                                <%= article.title %>
+                            </h4>
+                            <br>
+                            <div class="card-subtitle text-muted mb-2">
+                                Published : <%= article.createdAt.toLocaleDateString() %>
+                            </div>
+                            <br><br>
+                            <a href="articles/<%= article.slug %>" class="btn btn-primary">Read More</a>
+                            <a href="articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
+                            <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <div class="card-text mb-2">
+                                <%= article.description %>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-text mb-2">
-                        <%= article.description %>
-                    </div>
-                    <a href="articles/<%= article.slug %>" class="btn btn-primary">Read More</a>
-                    <a href="articles/edit/<%= article.id %>" class="btn btn-info">Edit</a>
-                    <form action="/articles/<%= article.id %>?_method=DELETE" method="POST" class="d-inline">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
                 </div>
             </div>
+        </div>
         <% }) %>
 
     </div>
 </body>
+
 </html>

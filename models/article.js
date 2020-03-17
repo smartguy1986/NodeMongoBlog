@@ -34,6 +34,10 @@ const articleSchema = new mongoose.Schema({
     sanitizedHTML:{
         type: String,
         required: true,
+    },
+    featuredimage:{
+        type: String,
+        required: true,
     }
 })
 
