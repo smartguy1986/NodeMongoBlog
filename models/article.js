@@ -12,7 +12,7 @@ mongoose.connect('mongodb://root:1986@blog-shard-00-00-eip6j.mongodb.net:27017,b
 const articleSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,
@@ -31,13 +31,16 @@ const articleSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    sanitizedHTML:{
-        type: String,
-        required: true,
-    },
+    // sanitizedHTML:{
+    //     type: String,
+    //     required: true,
+    // },
     featuredimage:{
         type: String,
-        required: true,
+        required: false,
+    },
+    oldimage:{
+        type: String,
     }
 })
 
@@ -46,9 +49,9 @@ articleSchema.pre('validate', function(){
         this.slug = slugify(this.title, {lower: true, strict: true})
     }
 
-    if(this.markdown){
-        this.sanitizedHTML = dompurify.sanitize(marked(this.markdown))
-    }
+    // if(this.markdown){
+    //     this.sanitizedHTML = dompurify.sanitize(marked(this.markdown))
+    // }
 })
 
 module.exports = mongoose.model('Article', articleSchema)

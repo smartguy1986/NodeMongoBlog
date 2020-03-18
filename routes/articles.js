@@ -38,26 +38,59 @@ router.delete('/:id', async (req, res) => {
 
 function saveArticleAndRedirect(path) {
     return async (req, res) => {
-        if (req.files.featuredimage) {
-            var file = req.files.featuredimage,
-                name = file.name,
-                type = file.mimetype
-            var uploadpath = './public/uploads/' + name
-            file.mv(uploadpath, function (err) {
-                if (err) {
-                    console.log("File Upload Failed", name, err)
-                }
-                else {
-                    console.log("File Uploaded", name)
-                }
-            })
+        console.log(req.body.oldimage)
+        // ============================================
+        if (req.files.featuredimage.name) {
+            if (req.article.oldimage) {
+                fs.unlink('./public/uploads/' + req.body.oldimage, function (err) {
+                    if (err) throw err;
+                    console.log('File deleted!');
+                });
+                var file = req.files.featuredimage,
+                    name = file.name,
+                    type = file.mimetype
+                var uploadpath = './public/uploads/' + name
+                file.mv(uploadpath, function (err) {
+                    if (err) {
+                        console.log("File Upload Failed", name, err)
+                    }
+                    else {
+                        console.log("File Uploaded", name)
+                    }
+                })
+                var imageName = req.files.featuredimage.name
+            }
+            else {
+                var file = req.files.featuredimage,
+                    name = file.name,
+                    type = file.mimetype
+                var uploadpath = './public/uploads/' + name
+                file.mv(uploadpath, function (err) {
+                    if (err) {
+                        console.log("File Upload Failed", name, err)
+                    }
+                    else {
+                        console.log("File Uploaded", name)
+                    }
+                })
+                var imageName = req.files.featuredimage.name
+            }
         }
+        else {
+            if (req.body.oldimage) {
+                var imageName = req.body.oldimage
+            }
+            else {
+                var imageName = ""
+            }
+        }
+        // ============================================
         console.log(req.files.featuredimage.name)
         let article = req.article
         article.title = req.body.title
         article.description = req.body.description
         article.markdown = req.body.markdown
-        article.featuredimage = req.files.featuredimage.name
+        article.featuredimage = imageName
         try {
             article = await article.save()
             res.redirect(`/articles/${article.slug}`)

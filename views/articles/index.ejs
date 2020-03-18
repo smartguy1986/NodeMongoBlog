@@ -27,7 +27,6 @@
                             <%} else { %>
                                 <img src='uploads/<%= article.featuredimage %>' width="100%">
                             <% } %>
-                            
                         </div>
                         <div class="col">
                             <h4 class="card-title">
@@ -46,7 +45,7 @@
                         </div>
                         <div class="col">
                             <div class="card-text mb-2">
-                                <%= article.description %>
+                                <%- article.description %>
                             </div>
                         </div>
                     </div>
