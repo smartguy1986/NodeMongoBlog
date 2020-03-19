@@ -1,8 +1,8 @@
 <div class="form-group">
   <label for="markdown">Fetured Image</label>
-  <input type="file" name="featuredimage" class="form-control"> 
-  <% if (article.featuredimage) { %>
-    <img src='./images/<%= article.featuredimage %>' width="150px">
+  <input type="file" name="featuredimage" class="form-control">
+  <% if (article.featuredimage!=null) { %>
+    <img src='/uploads/<%= article.featuredimage %>' width="150px">
   <% } %>
   <input type="hidden" name="oldimage" value="<%= article.featuredimage %>">
 </div>
