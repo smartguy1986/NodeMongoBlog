@@ -1,8 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Article = require('./models/article')
-const Admin = require('./models/admin')
-const adminRouter = require('./routes/admin')
 const articleRouter = require('./routes/articles')
 const methodOverride = require('method-override')
 const fileUpload = require('express-fileupload')
@@ -31,6 +29,5 @@ app.get('/', async (req, res) => {
 })
 
 app.use('/articles/', articleRouter)
-app.use('/admin/', adminRouter)
 
 app.listen(process.env.PORT || 5000)
